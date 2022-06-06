@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ $# -gt 4 ]
+then
+  echo "Too many arguments please enter image name, container name, and build/run as third and or fourth arguments"
+  exit
+fi
+if [ $# -lt 3 ]
+then
+  echo "Enter image name, container name, and at least build or run"
+  exit
+fi
+
+if [ "${3,,}" = "build" ] || [ "${4,,}" = "build" ]
+then
+  echo "\n\nBuilding the docker container\n\n"
+  docker build -t ${1} .
+fi
+if [ "${3,,}" = "run" ] || [ "${4,,}" = "run" ]
+then
+  echo "\n\nRunning the docker container\n\n"
+  docker run --name=${2} --restart=on-failure --detach --publish 127.0.0.1:8080:8080 ${1} 
+fi
