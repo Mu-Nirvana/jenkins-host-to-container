@@ -10,7 +10,7 @@
 3. Login to container at https://localhost:8080
 
 4. Once Jenkins has finished starting login with the password attained by running the command:
-`$ docker container exec <container name> cat /var/lib/jenkins/secrets/initialAdminPassword`
+`$ docker container exec <container name> cat /var/jenkins_home/secrets/initialAdminPassword`
 
 5. Select custom plugins and select `none` at the top of the menu
 
