@@ -1,0 +1,20 @@
+#!/bin/bash
+while read line; do
+  apt -y install $(echo $line | grep -o '^[^/]*')
+done < $1
+
+BEFORE=$(apt list --manual-installed=true)
+AFTER=$(cat ${1})
+
+while IFS= read -r line; do
+  if [[ "$BEFORE" != *"$(echo $line | grep -o '^[^/]*')"* ]]; then
+    if [[ "$(echo $line | grep -o '^[^/]*')" != *"Listing..."* ]]; then
+      MISMATCH="${MISMATCH} ${line}\n"
+    fi
+  fi
+done <<< "$AFTER"
+if [[ ! -z "$MISMATCH" ]]; then
+  echo -e "Missing programs: \n$MISMATCH"
+else
+  echo "No missing programs"
+fi

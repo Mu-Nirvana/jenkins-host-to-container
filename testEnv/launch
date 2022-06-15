@@ -17,6 +17,8 @@ then
 fi
 if [ "${3,,}" = "run" ] || [ "${4,,}" = "run" ]
 then
-  echo "\n\nRunning the docker container\n\n"
+  echo -e "\n\nRunning the docker container\n\n"
+  docker stop ${2}
+  docker rm ${2}
   docker run --name=${2} --restart=on-failure --detach --publish 127.0.0.1:8080:8080 ${1} 
 fi
