@@ -1,18 +1,25 @@
 #!/bin/bash
+
+#Loop over lines of input file and install the packages listed (Pull name from beginning of line with regex)
 while read line; do
   apt -y install $(echo $line | grep -o '^[^/]*')
 done < $1
 
-BEFORE=$(apt list --manual-installed=true)
-AFTER=$(cat ${1})
+#Store the new list of manually installed programs and old programs into variables
+NEW=$(apt list --manual-installed=true)
+GIVEN=$(cat ${1})
 
+#Loop over lines of the given list and compare to the new list
 while IFS= read -r line; do
-  if [[ "$BEFORE" != *"$(echo $line | grep -o '^[^/]*')"* ]]; then
+  if [[ "$NEW" != *"$(echo $line | grep -o '^[^/]*')"* ]]; then
     if [[ "$(echo $line | grep -o '^[^/]*')" != *"Listing..."* ]]; then
+      #Add missing files to a vriable
       MISMATCH="${MISMATCH} ${line}\n"
     fi
   fi
-done <<< "$AFTER"
+done <<< "$GIVEN"
+
+#Print List of missing programs if there are any
 if [[ ! -z "$MISMATCH" ]]; then
   echo -e "Missing programs: \n$MISMATCH"
 else
