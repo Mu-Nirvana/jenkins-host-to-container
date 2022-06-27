@@ -7,6 +7,6 @@ Future goals include automated assistance to transition configuration from web U
 ## Project structure
 
 * [testEnv](testEnv) Contains test environments for different Jenkins server setups
-* [testEnv/Base_container](test/Env/Base_container)  Is a basic Jenkins docker container with no configuration predefined
-* [testEnv/Copy_container](test/Env/Copy_container)  Is a Jenkins docker container built using a direct copy of another Jenkins server jenkins_home directory
+* [testEnv/Base_container](testEnv/Base_container)  Is a basic Jenkins docker container with no configuration predefined
+* [testEnv/Copy_container](testEnv/Copy_container)  Is a Jenkins docker container built using a direct copy of another Jenkins server jenkins_home directory
 * [src](src) Contains source code for the tool
