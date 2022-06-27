@@ -1,4 +1,5 @@
-BUILDOPTIONS:=--restart=on-failure --detach
+BUILDOPTIONS:=--rm
+RUNOPTIONS:=--restart=on-failure --detach
 TAG:=test_base
 CONTAINER:=basejenkins
 IP:=127.0.0.1
@@ -9,11 +10,11 @@ all: build remove run
 
 build: Dockerfile
 	@echo "\nBuild docker image with tag $(TAG)\n"
-	docker build $(OPTIONS) -t $(TAG) .
+	docker build $(BUILDOPTIONS) -t $(TAG) .
 
 run:
 	@echo "\nRunning docker container $(CONTAINER)\n"
-	docker run --name=$(CONTAINER) $(BUILDOPTIONS) --publish $(IP):$(PORT):8080 $(TAG)
+	docker run --name=$(CONTAINER) $(RUNOPTIONS) --publish $(IP):$(PORT):8080 $(TAG)
 
 remove:
 	@echo "\nRemoving docker container $(CONTAINER)\n"

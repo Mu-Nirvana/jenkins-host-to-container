@@ -1,8 +1,10 @@
 #!/bin/bash
-ls
+
+echo -e "\n***********************************************************\n		Original packages\n***********************************************************\n"
 docker container exec -u root basejenkins apt list --manual-installed=true
 docker cp ../../../../src/scripts/installdeps basejenkins:/
 docker cp installed basejenkins:/
 docker container exec -u root basejenkins /installdeps installed
 docker container exec -u root basejenkins rm installed installdeps 
+echo -e "\n***********************************************************\n		After installdeps packages\n***********************************************************\n"
 docker container exec -u root basejenkins apt list --manual-installed=true

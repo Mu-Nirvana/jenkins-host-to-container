@@ -1,4 +1,4 @@
-BUILDOPTIONS:=
+BUILDOPTIONS:=--rm
 RUNOPTIONS:=--restart=on-failure --detach
 TAG:=test_copy
 CONTAINER:=copyjenkins
