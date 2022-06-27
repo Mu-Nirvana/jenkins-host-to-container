@@ -20,6 +20,6 @@ remove:
 	 -docker stop $(CONTAINER)
 	 -docker rm $(CONTAINER)
 
-clean:
+clear:
 	@echo "\nRemoving docker image $(TAG)\n"
 	docker rmi $(TAG)
