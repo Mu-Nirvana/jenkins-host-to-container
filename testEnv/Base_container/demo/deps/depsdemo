@@ -1,0 +1,8 @@
+#!/bin/bash
+ls
+docker container exec -u root basejenkins apt list --manual-installed=true
+docker cp ../../../../src/scripts/installdeps basejenkins:/
+docker cp installed basejenkins:/
+docker container exec -u root basejenkins /installdeps installed
+docker container exec -u root basejenkins rm installed installdeps 
+docker container exec -u root basejenkins apt list --manual-installed=true
