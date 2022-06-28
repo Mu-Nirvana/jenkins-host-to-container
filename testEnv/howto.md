@@ -34,7 +34,7 @@ Used internally to remove artifacts after build
 Used internally to extract files from archive
 
 ### Variables
-`BUILDOPTIONS:=` Specify options for docker build
+`BUILDOPTIONS:=--rm` Specify options for docker build
 `RUNOPTIONS:=--restart=on-failure --detach` Specify options for docker run
 `TAG:=test_base` Image tag (test_copy for Copy_container)
 `CONTAINER:=basejenkins` Container name (copyjenkins for Copy_container)
