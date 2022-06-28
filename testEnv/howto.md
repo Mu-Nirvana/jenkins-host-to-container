@@ -10,7 +10,7 @@
 3. Login to container at https://localhost:8080 (port 8000 for Copy_jenkins)
 
 4. Once Jenkins has finished starting login with the password attained by running the command:
-`$ docker container exex basejenkins cat /var/jenkins_home/secrets/initialAdminPassword` (Replace basejenkins with copyjenkins as needed)
+`$ docker container exec basejenkins cat /var/jenkins_home/secrets/initialAdminPassword` (Replace basejenkins with copyjenkins as needed)
 
 5. (Base only) Select custom plugins and select `none` at the top of the menu
 
