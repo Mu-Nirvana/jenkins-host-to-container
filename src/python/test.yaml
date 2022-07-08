@@ -1,26 +1,24 @@
 Containerize:
   src: "~/jenkins-host-to-container/src"
   container:
-    - image: "jenkins/jenkins:2.319.3-lts-jdk11"
-    - jenkins_home_src: "~/Downloads/jenkins_home.tar"
-    - dependencies: "~/Downloads/targetdeps.txt"
-    - otherfiles:
-      - What_time:   
-        - src: "~/jenkins-host-to-container/testEnv/Copy_container/copy_files/what_time"
-        - dest: "/home"
-        - owner: "jenkins:jenkins"
-      - Jenkinsyaml:
-        - src: "~/jenkins-host-to-container/testEnv/Copy_container/copy_files/jenkins.yaml"
-        - dest: "/home"
-        - owner: "jenkins:jenkins"
+    image: "jenkins/jenkins:2.319.3-lts-jdk11"
+    jenkins_home_src: "~/Downloads/jenkins_home.tar"
+    dependencies: "~/Downloads/targetdeps.txt"
+    other_files:
+      - src: "~/jenkins-host-to-container/testEnv/Copy_container/copy_files/what_time"
+        dest: "/home"
+        owner: "jenkins:jenkins"
+      - src: "~/jenkins-host-to-container/testEnv/Copy_container/copy_files/jenkins.yaml"
+        dest: "/home"
+        owner: "jenkins:jenkins"
 
   build:
-    - build_options: "--rm"
-    - image_name: "autobuildtest"
-    - tag: "latest"
+    build_options: "--rm"
+    image_name: "autobuildtest"
+    tag: "latest"
     
   test_run:
-    - run_options: "--restart=on-failure"
-    - container_name: "autotest"
-    - port: 555
-    - IP: 0.0.0.0
+    run_options: "--restart=on-failure"
+    container_name: "autotest"
+    port: 555
+    IP: 0.0.0.0
