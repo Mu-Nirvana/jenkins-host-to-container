@@ -80,12 +80,9 @@ The `container:` section holds information used to generate the Dockerfile
 ### Copy jenkins home
 *On target jenkins instance* run these commands to create the copy. Copy the resulting the files to the build machine.
 #### Create archive
-`$ tar -czf jenkins_home.tar /var/jenkins_home` (jenkins_home may be at another location or stored in `$JENKINS_HOME`
-If the jenkins home directory is not named jenkins_home do the following additional steps:
-1. `$ tar -xf jenkins_home.tar`
-2. `$ mv <original dir name> jenkins_home`
-3. `$ tar -czf jenkins_home.tar jenkins_home`
-4. `rm -r jenkins_home`
+`$ tar -czf jenkins_home.tar /var/jenkins_home` (jenkins_home may be at another location or stored in `$JENKINS_HOME`  
+**If the jenkins home directory is not named jenkins_home** do the following instead:  
+`$ tar -czf jenkins_home.tar --transform s/<dir name>/jenkins_home/ <dir name>` Note: use `-s /^<dir name>/jenkins_home/` if using BSD tar instead of GNU
 #### Create dependency list
 `$ apt list --manual-installed=true > targetdeps.txt`
 
