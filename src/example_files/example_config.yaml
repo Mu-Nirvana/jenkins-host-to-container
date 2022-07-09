@@ -1,0 +1,25 @@
+Containerize:
+  container:
+    image: "jenkins/jenkins:2.319.3-lts-jdk11"
+    jenkins_home_src: "~/Downloads/jenkins_home.tar"
+    install_deps_src: "~/jenkins-host-to-container/src/scripts/installdeps"
+    dependencies: "~/Downloads/targetdeps.txt"
+    #Optional section: 
+    other_files:
+      - src: "~/jenkins-host-to-container/testEnv/Copy_container/copy_files/what_time"
+        dest: "/home"
+        owner: "jenkins:jenkins"
+      - src: "~/jenkins-host-to-container/testEnv/Copy_container/copy_files/jenkins.yaml"
+        dest: "/home"
+        owner: "jenkins:jenkins"
+
+  build:
+    build_options: "--rm"
+    image_name: "copied_jenkins"
+    tag: "latest"
+    
+  test_run:
+    run_options: "--restart=on-failure"
+    container_name: "test_container"
+    port: 8080 
+    IP: 0.0.0.0
