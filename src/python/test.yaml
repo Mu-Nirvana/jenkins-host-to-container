@@ -1,8 +1,8 @@
 Containerize:
-  src: "~/jenkins-host-to-container/src"
   container:
     image: "jenkins/jenkins:2.319.3-lts-jdk11"
     jenkins_home_src: "~/Downloads/jenkins_home.tar"
+    install_deps_src: "~/jenkins-host-to-container/src/scripts/installdeps"
     dependencies: "~/Downloads/targetdeps.txt"
     other_files:
       - src: "~/jenkins-host-to-container/testEnv/Copy_container/copy_files/what_time"
