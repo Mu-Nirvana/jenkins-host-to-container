@@ -9,6 +9,7 @@ Future goals include automated assistance to transition configuration from web U
 * [testEnv](testEnv) Contains test environments for different Jenkins server setups
 * [testEnv/Base_container](testEnv/Base_container)  Is a basic Jenkins docker container with no configuration predefined
 * [testEnv/Copy_container](testEnv/Copy_container)  Is a Jenkins docker container built using a direct copy of another Jenkins server jenkins_home directory
+* [testEnv/Autogenerate_container](testEnv/AUtogenerate_container) Is a docker container built automatically from a copied Jenkins_server
 * [src](src) Contains source code for the tool
 
 ## Basic process to launch Jenkins test environments
