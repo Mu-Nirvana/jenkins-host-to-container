@@ -2,33 +2,37 @@
 # jenkins-host-to-container
 Work-in-progress project aiming to create a highly automated tool to containerize a Jenkins server for cloud hosting (AKS and EKS).
 
-Future goals include automated assistance to transition configuration from web UI to Jcasc, and Job/Pipeline configuration to yaml with Jenkins Job Builder.
+Future goals include automated assistance to transition configuration from web UI to Jcasc, and Job/Pipeline configuration to yaml with [Jenkins Job Builder](https://jenkins-job-builder.readthedocs.io/en/latest/).
 
 ## Project structure
 
-* [testEnv](testEnv) Contains test environments for different Jenkins server setups
-* [testEnv/Base_container](testEnv/Base_container)  Is a basic Jenkins docker container with no configuration predefined
-* [testEnv/Copy_container](testEnv/Copy_container)  Is a Jenkins docker container built using a direct copy of another Jenkins server jenkins_home directory
-* [testEnv/Autogenerate_container](testEnv/AUtogenerate_container) Is a docker container built automatically from a copied Jenkins_server
+* [test](test) Contains test cases for different Jenkins server configs
+  * [test/Base_container](test/Base_container)  Is a basic Jenkins docker container with no configuration predefined
+  * [test/Copy_container](test/Copy_container)  Is a Jenkins docker container built using a direct copy of another Jenkins server jenkins_home directory
+  * [test/Autogenerate_container](test/AUtogenerate_container) Is a docker container built automatically from a copied Jenkins_server
 * [src](src) Contains source code for the tool
 
 ## Basic process to launch Jenkins test environments
-[testEnv/Base_container](testEnv/Base_container) & [testEnv/Copy_container](testEnv/Copy_container)
 
-1. Build and Run the Jenkins image:
+
+1. cd [test/Base_container](test/Base_container)
+
+2. Build and Run the Jenkins image:
 `$ make`
 
-2. Check container health:
+3. Check container health:
 `$ docker ps`
 
-3. Login to container at https://localhost:8080 (port 8000 for Copy_jenkins)
+4. Login to container at `https://localhost:{HOST_PORT}`
 
-4. Once Jenkins has finished starting login with the password attained by running the command:
+5. Once Jenkins has finished starting login with the password attained by running the command:
 `$ docker container exec basejenkins cat /var/jenkins_home/secrets/initialAdminPassword` (Replace basejenkins with copyjenkins as needed)
 
-5. (Base only) Select custom plugins and select `none` at the top of the menu
+6. Simply `x` out of plugin setup for this test case & start using Jenkins:
+   ![alt text](docs/customize_jenkins.png "Customize jenkins Plugins")
+7. Have fun
 
-6. Have fun
+Note: For [test/Copy_container](test/Copy_container) testing, you require a tar file of Jenkins home directory to test your migration.
 
 ## Make Specifics
 
@@ -53,13 +57,13 @@ Used internally to extract files from archive
 `TAG:=test_base` Image tag (test_copy for Copy_container)
 `CONTAINER:=basejenkins` Container name (copyjenkins for Copy_container)
 `IP:=127.0.0.1` Jenkins publish IP
-`PORT:=8080`Jenkins Publish Port
+`PORT:=`Jenkins Publish Port
 `EXTRACT:=~/Downloads/jenkins_home.tar` jenkins_home archive path (Copy_container only)
 
 Overwrite variables with the following syntax: `$ make \<var>=\<value>`
 
 ##  Build and run Auto-generate environment
-[testEnv/Autogenerate_container](testEnv/Autogenerate) 
+[test/Autogenerate_container](test/Autogenerate) 
 ### Build and start container
 `$ ../../src/python/autobuilder.py example_copy.yaml Dockerfile_Template`
 

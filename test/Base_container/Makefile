@@ -3,7 +3,7 @@ RUNOPTIONS:=--restart=on-failure --detach
 TAG:=test_base
 CONTAINER:=basejenkins
 IP:=127.0.0.1
-PORT:=8080
+PORT:=
 
 
 all: build remove run
