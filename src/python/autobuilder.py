@@ -84,7 +84,7 @@ def main():
   build = config["build"]
   testrun = config["test_run"]
 
-  if container["other_files"] is None: filesToCopy = [container["jenkins_home_src"], container["install_deps_src"], container["dependencies"]]
+  if "other_files" not in container: filesToCopy = [container["jenkins_home_src"], container["install_deps_src"], container["dependencies"]]
   else: filesToCopy = [container["jenkins_home_src"], container["install_deps_src"], container["dependencies"], *[file["src"] for file in container["other_files"]]]
 
   #Check files
