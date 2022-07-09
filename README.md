@@ -102,3 +102,4 @@ The `container:` section holds information used to generate the Dockerfile
 ### Shell into container
 `$ docker container exec -it <container name> /bin/bash`
 Optionally add `-u root` before `-it` to gain root privileges
+
