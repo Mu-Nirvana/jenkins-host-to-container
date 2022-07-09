@@ -2,10 +2,10 @@ image | FROM {}
  | ENV JENKINS_HOME /var/jenkins_home
  | USER root
  | RUN apt-get update
-src | COPY {}/scripts/installdeps /
-dependencies | COPY {} /
--strip dependencies | RUN /installdeps {}; rm /installdeps
+-strip install_deps_src | COPY copydir/{} /
+-strip dependencies | COPY copydir/{} /
+-strip install_deps_src -strip dependencies | RUN /{} {}; rm /installdeps
 -strip dependencies | RUN rm /{}
--extract jenkins_home_src | COPY --chown=jenkins:root {} $JENKINS_HOME
-!-repeat otherfiles owner src dest | COPY --chown={} {} {}
+-strip jenkins_home_src | ADD --chown=jenkins:root copydir/{} /var 
+!@ other_files owner -strip src dest | COPY --chown={} copydir/{} {}
  | USER jenkins
