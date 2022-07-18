@@ -97,6 +97,7 @@ def main():
   
   with open("Dockerfile", "x") as file:
     file.write(generateDockerfile(container, dockerTemplate))
+    print(generateDockerfile(container, dockerTemplate))
 
   dockerBuild = f'docker build {build["build_options"]} -t {build["image_name"]}:{build["tag"]} .'
   subprocess.run(dockerBuild.split())
