@@ -65,11 +65,12 @@ Overwrite variables with the following syntax: `$ make \<var>=\<value>`
 ##  Build and run Auto-generate environment
 [test/Autogenerate_container](test/Autogenerate) 
 ### Build and start container
-`$ ../../src/python/autobuilder.py example_copy.yaml Dockerfile_Template`
+`$ ../../src/python/autobuilder.py run example_copy.yaml Dockerfile_Template`
 
 ## Autobuild.py instructions
 ### Run program
-`python3 autobuilder.py <path to config yaml> <path to Dockerfile_Template>`
+`python3 autobuilder.py run <path to config yaml> <path to Dockerfile_Template>`
+Optionally replace run with build to only build the image or with dry to only create a Dockerfile
 ### Config Yaml
 Basic file example: [src/example_files/example_config.yaml](src/example_files/example_config.yaml)
 The `container:` section holds information used to generate the Dockerfile
@@ -102,4 +103,3 @@ The `container:` section holds information used to generate the Dockerfile
 ### Shell into container
 `$ docker container exec -it <container name> /bin/bash`
 Optionally add `-u root` before `-it` to gain root privileges
-
