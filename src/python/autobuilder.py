@@ -76,16 +76,16 @@ def conditionArgs(args, keyDict):
   
 def main():
   #Get yaml config
-  config = getYaml(str(sys.argv[1]))["Containerize"]
-  dockerTemplate = str(sys.argv[2]) 
+  config = getYaml(str(sys.argv[2]))["Containerize"]
+  dockerTemplate = str(sys.argv[3]) 
 
   #Separate out config sections
   container = config["container"]
   build = config["build"]
   testrun = config["test_run"]
 
-  if "other_files" not in container: filesToCopy = [container["jenkins_home_src"], container["install_deps_src"], container["dependencies"]]
-  else: filesToCopy = [container["jenkins_home_src"], container["install_deps_src"], container["dependencies"], *[file["src"] for file in container["other_files"]]]
+  if "other_files" not in container: filesToCopy = [container["install_deps_src"], container["dependencies"], container["plugins"]]
+  else: filesToCopy = [container["install_deps_src"], container["dependencies"], container["plugins"], *[file["src"] for file in container["other_files"]]]
 
   #Check files
   filecheck = checkfiles(dockerTemplate, *filesToCopy)
@@ -99,17 +99,21 @@ def main():
     file.write(generateDockerfile(container, dockerTemplate))
     print(generateDockerfile(container, dockerTemplate))
 
-  dockerBuild = f'docker build {build["build_options"]} -t {build["image_name"]}:{build["tag"]} .'
-  subprocess.run(dockerBuild.split())
+  if(str(sys.argv[1]) == "build" or str(sys.argv[1]) == "run"):
+    dockerBuild = f'docker build {build["build_options"]} -t {build["image_name"]}:{build["tag"]} .'
+    subprocess.run(dockerBuild.split())
   
-  dockerRun = f'docker run --name={testrun["container_name"]} {testrun["run_options"]} --detach --publish {testrun["IP"]}:{testrun["port"]}:8080 {build["image_name"]}:{build["tag"]}'
-  containerRun = subprocess.run(dockerRun.split())
+  if(str(sys.argv[1]) == "run"):
+    dockerRun = f'docker run --name={testrun["container_name"]} {testrun["run_options"]} --detach --publish {testrun["IP"]}:{testrun["port"]}:8080 -v {container["jenkins_home_src"]}:/var/jenkins_home {build["image_name"]}:{build["tag"]}'
+    containerRun = subprocess.run(dockerRun.split())
 
-  print('\n\n***************************************************\n    Test Container Running    \n***************************************************\n\n')
-  input("Press any key to shutdown test container and remove temporary files")
+    print('\n\n***************************************************\n    Test Container Running    \n***************************************************\n\n')
+
+  input("Press any key to clean environment")
   subprocess.run(['rm', '-rf', copydir, 'Dockerfile'])
-  subprocess.run(['docker', 'stop', testrun["container_name"]])
-  subprocess.run(['docker', 'rm', testrun["container_name"]])
+  if(str(sys.argv[1]) == "run"):
+    subprocess.run(['docker', 'stop', testrun["container_name"]])
+    subprocess.run(['docker', 'rm', testrun["container_name"]])
 
   
 if __name__ == "__main__":
