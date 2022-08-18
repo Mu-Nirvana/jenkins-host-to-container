@@ -4,6 +4,8 @@ Work-in-progress project aiming to create a highly automated tool to containeriz
 
 Future goals include automated assistance to transition configuration from web UI to Jcasc, and Job/Pipeline configuration to yaml with [Jenkins Job Builder](https://jenkins-job-builder.readthedocs.io/en/latest/).
 
+Sister project to create K8s cloud infrastructure to run Jenkins (Currently only AKS support) [Mu-Nirvana/jenkins-cloud-create](https://github.com/Mu-Nirvana/jenkins-cloud-create)
+
 ## Project structure
 
 * [test](test) Contains test cases for different Jenkins server configs
