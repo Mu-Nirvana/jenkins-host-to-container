@@ -84,8 +84,8 @@ def main():
   build = config["build"]
   testrun = config["test_run"]
 
-  if "other_files" not in container: filesToCopy = [container["install_deps_src"], container["dependencies"], container["plugins"]]
-  else: filesToCopy = [container["install_deps_src"], container["dependencies"], container["plugins"], *[file["src"] for file in container["other_files"]]]
+  if "other_files" not in container: filesToCopy = [container["install_deps_src"], container["dependencies"]]
+  else: filesToCopy = [container["install_deps_src"], container["dependencies"], *[file["src"] for file in container["other_files"]]]
 
   #Check files
   filecheck = checkfiles(dockerTemplate, *filesToCopy)
