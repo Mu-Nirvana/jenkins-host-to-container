@@ -77,7 +77,7 @@ Optionally replace run with build to only build the image or with dry to only cr
 Basic file example: [src/example_files/example_config.yaml](src/example_files/example_config.yaml)
 The `container:` section holds information used to generate the Dockerfile
 * `image:`  Jenkins base image
-* `jenkins_home_src:` Path to jenkins_home archive [copying an instance](#copying-a-jenkins-instance)
+* `jenkins_home_src:` (Optional) Name of Docker volume configured with unpacked tar file[copying an instance](#copying-a-jenkins-instance)
 * `install_deps_src:` Path to installdeps script ([src/scripts/installdeps](src/scripts/installdeps))
 * `dependencies:` Path to dependency list [copying an instance](#copying-a-jenkins-instance)
 * `other_files:` List of other files to copy to jenkins
