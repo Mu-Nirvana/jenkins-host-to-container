@@ -1,4 +1,4 @@
 .idea
 testEnv/Copy_container/copy_files/jenkins_home/
 __pycache__/
-.swp
+*.swp
