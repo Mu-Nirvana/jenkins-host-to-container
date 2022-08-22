@@ -2,7 +2,7 @@ from modules import value_sub
 
 #Swap in values to base Dockerfile template
 def base_docker(template, key_values):
-    return value_sub.replace_keys(template, value_sub.find_keys(template, value_sub.SUB_PATTERN), key_values)
+    return value_sub.replace_keys(template, value_sub.find_keys(template, value_sub.SUB_PATTERN), key_values).rstrip('\n')
 
 #Add additional files to container
 def add_files(Dockerfile, files):

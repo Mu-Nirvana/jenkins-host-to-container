@@ -1,4 +1,4 @@
-from moudules import value_sub
+from modules import value_sub
 
 #Swap in values to a k8s template
 def k8s_template(template, key_values):
