@@ -2,3 +2,6 @@
 testEnv/Copy_container/copy_files/jenkins_home/
 __pycache__/
 *.swp
+src/*.yaml
+src/Dockerfile
+src/*.tar
