@@ -1,6 +1,7 @@
 import yaml
 import tarfile
-from os.path import expand_path, exists
+from shutil import copy2
+from os.path import expanduser, exists
 from os import getcwd, remove
 
 #Get a file
@@ -20,14 +21,19 @@ def write_file(filename, contents):
 
 #Write to a tar file
 def write_tar(tarname, contents):
-    with tarfile.open(tarname, 'w') as tar:
+    with tarfile.open(expand_path(tarname), 'w') as tar:
         for file in contents:
             tar.add(file)
+
+#Copy files to current directory
+def copy_files(files):
+    for file in files:
+        copy2(expand_path(file), getcwd())
 
 #Delete files
 def delete_files(files):
     for file in files:
-        remove()
+        remove(expand_path(file))
 
 #Checkfiles
 def check_files(files):
@@ -36,16 +42,19 @@ def check_files(files):
             return False 
     return True
 
+#Expand a relative path, user home path, or path from current directory
 def expand_path(path):
     if "./" in path:
-        path = path.replace('.', getcwd())
+        path = path[path.find('.'):]
+        path = path.replace('./', getcwd()+'/')
     
     if "../" in path:
         raise Exception("Can't use parent directory in relative path. Feature not implemented")
         #TODO Fix this garbage
+
     path = expanduser(path)
 
-    if path.find('/') == -1:
+    if path[0] not in "/.~":
         path = getcwd() + '/' + path
 
     return path
