@@ -174,3 +174,7 @@ Optionally add `-n <namespace>` to list pods in namespace that isn't the default
 ### Shell into a pod
 `$ kubectl exec <pod name> -it -- sh`
 Optionally add `-c <container>` before `--` to shell into a specific container in the pod
+
+### Add jenkins_generator.py to path
+`echo 'export PATH="<jenkins-host-to-container path>/src:$PATH"' >> ~/.bashrc`
+If using zsh or another shell, replace `.bashrc` with `.zshrc` or the appropriate config file.
