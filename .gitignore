@@ -5,3 +5,4 @@ __pycache__/
 src/*.yaml
 src/Dockerfile
 src/*.tar
+test/Autogenerate_container/Dockerfile
