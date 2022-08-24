@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${applicationName}-test 
+  labels:
+    app: ${applicationName}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins-pod 
+  template:
+    metadata:
+      labels:
+        app: jenkins-pod 
+    spec:
+      initContainers:
+      - name: init
+        image: busybox:latest
+        command: ['sh', '-c', 'while [ ! -f "/mnt/jenkins-volume/done" ]; do sleep 10; done;']
+        volumeMounts:
+        - mountPath: /mnt/jenkins-volume
+          name: jenkins-home-volume
+      containers:
+      - name: jenkins 
+        image: ${image} 
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/jenkins_home
+          name: jenkins-home-volume
+
+      volumes:
+      - name: jenkins-home-volume
+        persistentVolumeClaim:
+          claimName: ${applicationName}-pvc
+

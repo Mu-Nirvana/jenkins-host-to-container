@@ -1,4 +1,8 @@
 .idea
 testEnv/Copy_container/copy_files/jenkins_home/
 __pycache__/
-.swp
+*.swp
+src/*.yaml
+src/Dockerfile
+src/*.tar
+test/Autogenerate_container/Dockerfile

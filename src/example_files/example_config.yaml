@@ -1,25 +1,47 @@
-Containerize:
-  container:
-    image: "jenkins/jenkins:2.319.3-lts-jdk11"
-    jenkins_home_src: "~/Downloads/jenkins_home.tar"
-    install_deps_src: "~/jenkins-host-to-container/src/scripts/installdeps"
-    dependencies: "~/Downloads/targetdeps.txt"
-    #Optional section: 
-    other_files:
-      - src: "~/jenkins-host-to-container/testEnv/Copy_container/copy_files/what_time"
-        dest: "/home"
-        owner: "jenkins:jenkins"
-      - src: "~/jenkins-host-to-container/testEnv/Copy_container/copy_files/jenkins.yaml"
-        dest: "/home"
-        owner: "jenkins:jenkins"
+#Jenkins Generator config options
+JenkinsGenerator:
+  templates: 
+    #Use ~/yeet for K8sDeployment template
+    K8sDeployment: ~/yeet
+  #Output modes
+  output: stdout, files
 
-  build:
-    build_options: "--rm"
-    image_name: "copied_jenkins"
-    tag: "latest"
-    
-  test_run:
-    run_options: "--restart=on-failure"
-    container_name: "test_container"
-    port: 8080 
-    IP: 0.0.0.0
+#Dockerfile configs
+Dockerfile:
+  image: jenkins/jenkins:2.319.3-lts-jdk11
+  #Context src files and directories
+  src: 
+  - scripts/installdeps 
+  #Optional section for other files to include: 
+  otherFiles:
+  - src: what_time
+    dest: /home
+    owner: jenkins:jenkins
+  - src: jenkins.yaml
+    dest: /home
+    owner: jenkins:jenkins
+  #Depedency list file
+  installDeps:
+    depFile: targetdeps.txt
+
+#Kubernetes manifests config
+K8s:
+  cloudProvider: Azure 
+  image: jenkinscr.azurecr.io/jenkins_to_cloud:latest
+  jenkinsHomeSize: 10Gi
+  applicationName: jenkins
+  #ipRange comma separated list of whitelisted ip cidr ranges
+  ipRange: 0.0.0.0/0
+  hostDNS: userjenkins.eastus.cloudapp.azure.com
+
+
+Build:
+  buildOptions: --rm
+  imageName: test_jenkins_build
+  tag: latest
+  
+Run:
+  runOptions: --restart=on-failure
+  containerName: test_container
+  port: 8080 
+  IP: 0.0.0.0
