@@ -44,7 +44,20 @@ def main():
 
 #Help program
 def help():
-    print("Help not yet implmented") 
+    print(""" 
+Usage: jenkins_generator.py [OPTION] [FILE]
+Generate Dockerfile, Kubernetes, Build docker image, and run docker image, for jenkins.
+Uses config specified in [FILE], if [FILE] is not given, the current directory will be searched for 'config.yaml'.
+
+Options ending with '=' must have inputs appended with no quotes or spaces.
+  --help                List help output
+  --no-build            Overrides config and disables the build step
+  --no-run              Overrides config and disables the run step
+  --out=MODES           Overrides config and sets the passed output modes
+                            MODES are: stdout, files, tar, all 
+  --tls-cert=TYPE       Overrides config and sets tls cert type
+                            TYPE are: none
+""")
 
 #Generator program
 def program(args):
