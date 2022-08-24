@@ -91,9 +91,9 @@ The Jenkins deployment begins with an init container to allow setup of the jenki
 ### Copy jenkins home
 *On target jenkins instance* run these commands to create the copy. Copy the resulting the files to the build machine.
 #### Create archive
-`$ tar -czf --exclude='/var/jenkins_home/plugins' jenkins_home.tar /var/jenkins_home` (jenkins_home may be at another location or stored in `$JENKINS_HOME`  
+`$ tar --exclude='/var/jenkins_home/plugins' -czf jenkins_home.tar /var/jenkins_home` (jenkins_home may be at another location or stored in `$JENKINS_HOME`  
 **If the jenkins home directory is not named jenkins_home** do the following instead:  
-`$ tar -czf --exclude='<dir name>/plugins' jenkins_home.tar --transform s/<dir name>/jenkins_home/ <dir name>` Note: use `-s /^<dir name>/jenkins_home/` if using BSD tar instead of GNU
+`$ tar --exclude='<dir name>/plugins' -czf jenkins_home.tar --transform s/<dir name>/jenkins_home/ <dir name>` Note: use `-s /^<dir name>/jenkins_home/` if using BSD tar instead of GNU
 #### Create dependency list
 Automatically:
 `$ apt list --manual-installed=true > targetdeps.txt`
