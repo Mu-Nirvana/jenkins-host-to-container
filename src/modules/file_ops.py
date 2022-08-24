@@ -1,7 +1,7 @@
 import yaml
 import tarfile
 from shutil import copy2
-from os.path import expanduser, exists
+from os.path import expanduser, exists, abspath
 from os import getcwd, remove
 
 #Get a file
@@ -44,17 +44,4 @@ def check_files(files):
 
 #Expand a relative path, user home path, or path from current directory
 def expand_path(path):
-    if "./" in path:
-        path = path[path.find('.'):]
-        path = path.replace('./', getcwd()+'/')
-    
-    if "../" in path:
-        raise Exception("Can't use parent directory in relative path. Feature not implemented")
-        #TODO Fix this garbage
-
-    path = expanduser(path)
-
-    if path[0] not in "/.~":
-        path = getcwd() + '/' + path
-
-    return path
+    return abspath(expanduser(path))
