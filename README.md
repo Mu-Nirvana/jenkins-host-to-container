@@ -1,5 +1,5 @@
 
-# jenkins-host-to-cloud
+# jenkins-host-to-container
 Work-in-progress project aiming to aid migration from a Jenkins server to cloud hosting (AKS and EKS). Consuming a configuration yaml file, the tool generates a Dockerfile to containerize the Jenkins server, and Kubernetes manifests to create the supporting resources. 
 
 Future goals include automated assistance to transition Jenkins configuration from web UI to Jcasc, and Job/Pipeline configuration to yaml with [Jenkins Job Builder](https://jenkins-job-builder.readthedocs.io/en/latest/).
