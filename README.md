@@ -1,6 +1,9 @@
 
 # jenkins-host-to-container
-Work-in-progress project aiming to aid migration from a Jenkins server to cloud hosting (AKS and EKS). Consuming a configuration yaml file, the tool generates a Dockerfile to containerize the Jenkins server, and Kubernetes manifests to create the supporting resources. 
+
+Work-in-progress project aiming to aid migration from a Jenkins server to public cloud  (AKS and EKS).
+
+Consuming a configuration yaml file, the tool generates a Dockerfile to containerize the Jenkins server, and Kubernetes manifests to create the supporting resources. 
 
 Future goals include automated assistance to transition Jenkins configuration from web UI to Jcasc, and Job/Pipeline configuration to yaml with [Jenkins Job Builder](https://jenkins-job-builder.readthedocs.io/en/latest/).
 
@@ -10,17 +13,21 @@ Sister project to create K8s cloud infrastructure to run Jenkins (Currently only
 
 * [test](test) Contains test cases for different Jenkins server configs
   * [test/Base_container](test/Base_container)  Is a basic Jenkins docker container with no configuration predefined
-  * [test/Copy_container](test/Copy_container)  Is a Jenkins docker container built using a direct copy of another Jenkins server jenkins_home directory
-  * [test/Autogenerate_container](test/Autogenerate_container) Is a docker container built automatically from a copied Jenkins_server
+  * [test/Copy_container](test/Copy_container)  Is a Jenkins docker container built using a direct copy of another Jenkins server jenkins_home directory. Static Dockerfile.
+  * [test/Autogenerate_container](test/Autogenerate_container) Is a docker container built automatically from a copied Jenkins_server. Generated Dockerfile.
 * [src](src) Contains source code for the tool
 	* The main script for the tool is located at [src/jenkins_generator.py](src/jenkins_generator.py)
-	* [src/example_files](src/example_files) contains example configuration files
+	* [src/example_files](src/example_files) contains example configuration files.
 	* [src/templates](src/templates) contains the base templates used by the tool to generate the files
 
 ## Jenkins Generator instructions
+
 ### Usage
+
 `$ ./jenkins_generator.py [OPTION] [FILE]`
+
 If the config file is located in the current directory and using the default name `config.yaml`, `[FILE]` can be omitted.
+
 ### Options
 * `--help` - Prints help output similar to these docs
 * `--no-build` - Overrides config and disables the build step
@@ -29,8 +36,10 @@ If the config file is located in the current directory and using the default nam
 	* `<modes>` should be a comma separated list with no spaces
 * `--suggested` - Enables suggested commands output. (Not Yet Implemented)
 * `--tls-cert=<type>` - Overrides config and sets tls cert type. (Currently only `none` is supported)
+
 ## Config yaml
 The program defaults to searching the current directory for `config.yaml` if no config file is passed to the command.
+
 ### Sections
 There are up to five distinct sections to the config yaml.
 1. [`JenkinsGenerator`](#jenkinsgenerator)- This section specifies configuration options for the tool - **required*
